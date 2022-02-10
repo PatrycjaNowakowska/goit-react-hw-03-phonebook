@@ -6,20 +6,36 @@ class ContactForm extends Component {
   state = {
     contacts: [],
     name: "",
+    number: "",
   };
 
   inputID = nanoid();
 
   // Odpowiada za aktualizację stanu
-  handleChange = (e) => {
-    this.setState({ name: e.target.value });
+  handleChangeName = (e) => {
+    e.preventDefault();
+    this.setState((state) => ({
+      ...state,
+      name: e.target.value,
+    }));
+  };
+
+  handleChangeNumber = (e) => {
+    e.preventDefault();
+    this.setState((state) => ({
+      ...state,
+      number: e.target.value,
+    }));
   };
 
   handleSubmit = (e) => {
-    e.preventDefault();
-    this.setState((state) => ({
-      contacts: [...state.contacts, { id: nanoid(), name: this.state.name }],
-    }));
+      e.preventDefault();
+      this.setState((state) => ({
+          contacts: [
+              ...state.contacts,
+              { id: nanoid(), name: this.state.name, number: this.state.number }],
+      }));
+      
       console.log(this.state.contacts);
 
     // e.preventDefault();
@@ -28,7 +44,6 @@ class ContactForm extends Component {
     // this.setState({ contacts: newContacts });
     // console.log(this.state.contacts);
   };
-
 
   render() {
     // const { name } = this.state;
@@ -46,7 +61,20 @@ class ContactForm extends Component {
               title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
               required
               value={this.state.name}
-              onChange={this.handleChange}
+              onChange={this.handleChangeName}
+              id={this.inputID}
+            />
+          </label>
+          <label>
+            Number
+            <input
+              type="tel"
+              name="number"
+              pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
+              title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
+              required
+              value={this.state.number}
+              onChange={this.handleChangeNumber}
               id={this.inputID}
             />
           </label>
@@ -55,8 +83,10 @@ class ContactForm extends Component {
         </form>
         <h2>Contacts</h2>
         <ul>
-          {this.state.contacts.map(({ name, id }) => (
-            <li key={id}>{name}</li>
+          {this.state.contacts.map(({ id, name, number }) => (
+            <li key={id}>
+              {name}: {number}
+            </li>
           ))}
         </ul>
       </div>
