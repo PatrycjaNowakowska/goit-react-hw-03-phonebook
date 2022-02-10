@@ -4,7 +4,13 @@ import { nanoid } from "nanoid";
 
 class ContactForm extends Component {
   state = {
-    contacts: [],
+    contacts: [
+      { id: "id-1", name: "Rosie Simpson", number: "459-12-56" },
+      { id: "id-2", name: "Hermione Kline", number: "443-89-12" },
+      { id: "id-3", name: "Eden Clements", number: "645-17-79" },
+      { id: "id-4", name: "Annie Copeland", number: "227-91-26" },
+    ],
+    filter: "",
     name: "",
     number: "",
   };
@@ -28,15 +34,25 @@ class ContactForm extends Component {
     }));
   };
 
+  filterInput = (e) => {
+    e.preventDefault();
+    this.setState((state) => ({
+      ...state,
+      filter: e.target.value,
+    }));
+    console.log(this.state.filter);
+  };
+
   handleSubmit = (e) => {
-      e.preventDefault();
-      this.setState((state) => ({
-          contacts: [
-              ...state.contacts,
-              { id: nanoid(), name: this.state.name, number: this.state.number }],
-      }));
-      
-      console.log(this.state.contacts);
+    e.preventDefault();
+    this.setState((state) => ({
+      contacts: [
+        ...state.contacts,
+        { id: nanoid(), name: this.state.name, number: this.state.number },
+      ],
+    }));
+
+    console.log(this.state.contacts);
 
     // e.preventDefault();
     // let newContacts = this.state.contacts;
@@ -82,12 +98,30 @@ class ContactForm extends Component {
           <button type="submit">Add contact</button>
         </form>
         <h2>Contacts</h2>
+        <p>Find contacts by name</p>
+        <input
+          type="text"
+          name="filter"
+          pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+          title="Filter by name"
+          onChange={this.filterInput}
+        />
         <ul>
-          {this.state.contacts.map(({ id, name, number }) => (
-            <li key={id}>
-              {name}: {number}
-            </li>
-          ))}
+          {this.state.filter === ""
+            ? this.state.contacts.map(({ id, name, number }) => (
+                <li key={id}>
+                  {name}: {number}
+                </li>
+              ))
+            : this.state.contacts
+                .filter(({ name }) =>
+                  name.toLowerCase().includes(this.state.filter.toLowerCase())
+                )
+                .map(({ id, name, number }) => (
+                  <li key={id}>
+                    {name}: {number}
+                  </li>
+                ))}
         </ul>
       </div>
     );
