@@ -1,12 +1,11 @@
 import './App.css';
-import ContactForm from './components/ContactForm/ContactForm'
-
+import Phonebook from './components/Phonebook/Phonebook';
+  
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <h1>Phonebook</h1>
-        <ContactForm />
+        <Phonebook />
       </header>
     </div>
   );
