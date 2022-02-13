@@ -47,12 +47,17 @@ class Phonebook extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    this.setState((state) => ({
-      contacts: [
-        ...state.contacts,
-        { id: nanoid(), name: this.state.name, number: this.state.number },
-      ],
-    }));
+    let arrayOfContactsNames = this.state.contacts.map((arr) => arr.name);
+    if (arrayOfContactsNames.includes(this.state.name)) {
+      alert(`${this.state.name} is already in contacts!`);
+    } else {
+      this.setState((state) => ({
+        contacts: [
+          ...state.contacts,
+          { id: nanoid(), name: this.state.name, number: this.state.number },
+        ],
+      }))
+    };
 
     console.log(this.state.contacts);
 
