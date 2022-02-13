@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { nanoid } from "nanoid";
 import ContactList from "../ContactList/ContactList.jsx";
-import Filter from "../Filter/Filter.jsx"
+import Filter from "../Filter/Filter.jsx";
 import ContactForm from "../ContactForm/ContactForm.jsx";
 
 class Phonebook extends Component {
@@ -42,15 +42,15 @@ class Phonebook extends Component {
       ...state,
       filter: e.target.value,
     }));
-    console.log(this.state.filter);
+    // console.log(this.state.filter);
   };
 
-    deleteContact = (numID) => {
+  deleteContact = (numID) => {
     this.setState((state) => ({
       ...state,
       contacts: this.state.contacts.filter(({ id }) => id !== numID),
-    }))
-  }
+    }));
+  };
 
   handleSubmit = (e) => {
     e.preventDefault();
@@ -63,10 +63,10 @@ class Phonebook extends Component {
           ...state.contacts,
           { id: nanoid(), name: this.state.name, number: this.state.number },
         ],
-      }))
-    };
+      }));
+    }
 
-    console.log(this.state.contacts);
+    // console.log(this.state.contacts);
 
     // e.preventDefault();
     // let newContacts = this.state.contacts;

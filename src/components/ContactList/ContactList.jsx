@@ -1,29 +1,42 @@
-import React from 'react'
+import React from "react";
+import styles from "../Styles.module.css";
 
 const ContactList = ({ filter, contacts, deleteContact }) => {
-    return (
-        <div>
-         <ul>
-          {filter === ""
-            ? contacts.map(({ id, name, number }) => (
+  return (
+    <div>
+      <ul className={styles.list}>
+        {filter === ""
+          ? contacts.map(({ id, name, number }) => (
+              <li key={id}>
+                {name}: {number}
+                <button
+                  type="button"
+                  onClick={() => deleteContact(id)}
+                  className={styles.btn}
+                >
+                  DELETE
+                </button>
+              </li>
+            ))
+          : contacts
+              .filter(({ name }) =>
+                name.toLowerCase().includes(filter.toLowerCase())
+              )
+              .map(({ id, name, number }) => (
                 <li key={id}>
-                    {name}: {number}
-                    <button type="button" onClick={() => deleteContact(id)}>DELETE</button>
+                  {name}: {number}
+                  <button
+                    type="button"
+                    onClick={() => deleteContact(id)}
+                    className="btn"
+                  >
+                    DELETE
+                  </button>
                 </li>
-              ))
-            : contacts
-                .filter(({ name }) =>
-                  name.toLowerCase().includes(filter.toLowerCase())
-                )
-                .map(({ id, name, number }) => (
-                  <li key={id}>
-                        {name}: {number}
-                        <button type="button" onClick={() => deleteContact(id)}>DELETE</button>
-                  </li>
-                ))}
-        </ul> 
-        </div>
-    )
-}
-    
+              ))}
+      </ul>
+    </div>
+  );
+};
+
 export default ContactList;
