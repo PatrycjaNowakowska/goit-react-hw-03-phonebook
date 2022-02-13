@@ -45,6 +45,13 @@ class Phonebook extends Component {
     console.log(this.state.filter);
   };
 
+    deleteContact = (numID) => {
+    this.setState((state) => ({
+      ...state,
+      contacts: this.state.contacts.filter(({ id }) => id !== numID),
+    }))
+  }
+
   handleSubmit = (e) => {
     e.preventDefault();
     let arrayOfContactsNames = this.state.contacts.map((arr) => arr.name);
@@ -83,7 +90,11 @@ class Phonebook extends Component {
         />
         <h2>Contacts</h2>
         <Filter filterInput={this.filterInput} />
-        <ContactList filter={this.state.filter} contacts={this.state.contacts} />
+        <ContactList
+          filter={this.state.filter}
+          contacts={this.state.contacts}
+          deleteContact={this.deleteContact}
+        />
       </div>
     );
   }

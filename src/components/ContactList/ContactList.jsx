@@ -1,13 +1,14 @@
 import React from 'react'
 
-const ContactList = ({ filter, contacts }) => {
+const ContactList = ({ filter, contacts, deleteContact }) => {
     return (
         <div>
          <ul>
           {filter === ""
             ? contacts.map(({ id, name, number }) => (
                 <li key={id}>
-                  {name}: {number}
+                    {name}: {number}
+                    <button type="button" onClick={() => deleteContact(id)}>DELETE</button>
                 </li>
               ))
             : contacts
@@ -16,7 +17,8 @@ const ContactList = ({ filter, contacts }) => {
                 )
                 .map(({ id, name, number }) => (
                   <li key={id}>
-                    {name}: {number}
+                        {name}: {number}
+                        <button type="button" onClick={() => deleteContact(id)}>DELETE</button>
                   </li>
                 ))}
         </ul> 
