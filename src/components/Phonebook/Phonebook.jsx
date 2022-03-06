@@ -75,6 +75,22 @@ class Phonebook extends Component {
     // console.log(this.state.contacts);
   };
 
+  addContactToLocalStorage = () => {
+    localStorage.setItem("Contacts", JSON.stringify(this.state.contacts));
+  };
+
+  componentDidMount() {
+    let getContacts = localStorage.getItem("Contacts");
+
+    getContacts
+      ? this.setState({ contacts: JSON.parse(getContacts) })
+      : this.addContactToLocalStorage();
+  }
+
+  componentDidUpdate() {
+    this.addContactToLocalStorage();
+  }
+
   render() {
     // const { name } = this.state;
     // const { contacts } = this.state;
